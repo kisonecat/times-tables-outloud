@@ -1,0 +1,112 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: 1.5;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--paper-grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-grid-major) 1px, transparent 1px),
+    linear-gradient(var(--paper-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px);
+  background-size:
+    120px 120px,
+    120px 120px,
+    24px 24px,
+    24px 24px;
+  background-position: var(--paper-shift, 0px) var(--paper-shift, 0px);
+  transition: background-position var(--dur-slow) var(--ease-out);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.1;
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--pencil);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Shared button styles. Components compose these via className. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-5);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-weight: 700;
+  box-shadow: 0 3px 0 var(--ink);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--ink);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--pencil);
+  border-color: var(--pencil);
+  color: var(--on-pencil);
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--pencil) 60%, black);
+}
+
+.btn-ghost {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.btn-ghost:active {
+  box-shadow: none;
+}

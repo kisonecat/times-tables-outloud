@@ -1,0 +1,157 @@
+.screen {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-5) var(--gutter) var(--space-7);
+  display: grid;
+  justify-items: center;
+  gap: var(--space-6);
+  animation: global(rise-in) var(--dur-base) var(--ease-out);
+}
+
+.title {
+  font-size: var(--text-2xl);
+  text-align: center;
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.cell {
+  position: relative;
+}
+
+.card {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-3);
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.card:hover {
+  transform: translateY(-3px) rotate(-1deg);
+  box-shadow: var(--shadow-lg);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-lg);
+  overflow-wrap: anywhere;
+}
+
+.remove {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  font-weight: 700;
+}
+
+.confirm {
+  height: 100%;
+  display: grid;
+  gap: var(--space-2);
+  align-content: center;
+  padding: var(--space-3);
+  background: var(--miss-soft);
+  border: 2px solid var(--miss);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.confirm p {
+  margin: 0;
+}
+
+.danger {
+  background: var(--miss);
+  border-color: var(--miss);
+  color: #fff;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.form {
+  width: min(100%, 360px);
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.field {
+  width: 100%;
+  display: grid;
+  gap: var(--space-1);
+  font-weight: 700;
+}
+
+.field input {
+  min-height: 48px;
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: var(--text-lg);
+}
+
+.swatches {
+  display: flex;
+  gap: var(--space-2);
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.swatches legend {
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: transform var(--dur-fast) var(--ease-spring);
+}
+
+.swatch:has(input:checked) {
+  border-color: var(--ink);
+  transform: scale(1.12);
+}
+
+.swatch:has(input:focus-visible) {
+  outline: 3px solid var(--pencil);
+  outline-offset: 2px;
+}

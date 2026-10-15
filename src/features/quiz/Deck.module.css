@@ -1,0 +1,64 @@
+.deck,
+.pile {
+  position: absolute;
+  width: 64px;
+  height: 44px;
+  pointer-events: none;
+}
+
+.deck {
+  right: -10px;
+  bottom: -26px;
+}
+
+.pile {
+  left: -10px;
+  top: -30px;
+}
+
+.deck i,
+.pile i {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Card backs: a few blue rules. */
+.deck i {
+  background-image: repeating-linear-gradient(transparent 0 7px, var(--card-rule) 7px 8px);
+}
+
+.deck i:nth-child(1) {
+  transform: rotate(6deg) translate(4px, 3px);
+}
+
+.deck i:nth-child(2) {
+  transform: rotate(-3deg) translate(1px, 1px);
+}
+
+.pile i {
+  border-top: 2px solid var(--card-margin);
+  animation: land var(--dur-base) var(--ease-spring) backwards;
+  animation-delay: var(--dur-fast);
+}
+
+.pile i:nth-child(1) {
+  transform: rotate(-7deg);
+}
+
+.pile i:nth-child(2) {
+  transform: rotate(4deg) translate(2px, -2px);
+}
+
+.pile i:nth-child(3) {
+  transform: rotate(-2deg) translate(-1px, -4px);
+}
+
+@keyframes land {
+  from {
+    opacity: 0;
+  }
+}

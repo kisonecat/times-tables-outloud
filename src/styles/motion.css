@@ -1,0 +1,115 @@
+/* Every duration, stagger and easing in the app comes from here, so the whole app can be
+   sped up or slowed down in one place via --motion-scale. JS reads the hold times through
+   lib/motion.ts so they scale too. */
+:root {
+  --motion-scale: 1;
+  --dur-fast: calc(140ms * var(--motion-scale));
+  --dur-base: calc(280ms * var(--motion-scale));
+  --dur-slow: calc(520ms * var(--motion-scale));
+  /* card choreography */
+  --dur-deal: calc(450ms * var(--motion-scale));
+  --dur-roll: calc(160ms * var(--motion-scale));
+  --stagger-digit: calc(40ms * var(--motion-scale));
+  --stagger-row: calc(60ms * var(--motion-scale));
+  /* how long feedback stays up before the next card deals in */
+  --hold-correct: calc(400ms * var(--motion-scale));
+  --hold-miss: calc(2500ms * var(--motion-scale));
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in: cubic-bezier(0.5, 0, 0.75, 0);
+  --ease-spring: linear(0, 0.26 9%, 0.76 22%, 1.05 33%, 1.1 40%, 1.04 52%, 0.99 66%, 1);
+  --ease-wobble: linear(0, -0.3 15%, 0.3 30%, -0.2 45%, 0.1 60%, 0);
+}
+
+/* Registered so they can be animated: the think ring's fill and color, and count-ups. */
+@property --elapsed {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --ring-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --count {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.35);
+  }
+}
+
+/* Count-up: animate --count from 0 to the element's --to, and show it with a counter. */
+@keyframes count-up {
+  from {
+    --count: 0;
+  }
+  to {
+    --count: var(--to);
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-base);
+  animation-timing-function: var(--ease-out);
+}
+
+/* Reduced motion: every movement becomes a crossfade of at most 150 ms. Components also
+   switch their own keyframes to fades and drop particles, wobble and parallax. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 100ms;
+    --dur-base: 150ms;
+    --dur-slow: 150ms;
+    --dur-deal: 150ms;
+    --dur-roll: 0ms;
+    --stagger-digit: 0ms;
+    --stagger-row: 0ms;
+    --ease-spring: linear;
+    --ease-wobble: linear;
+  }
+
+  /* Screen changes: crossfade only (the default group animation moves things). */
+  ::view-transition-group(*) {
+    animation: none;
+  }
+
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
+}

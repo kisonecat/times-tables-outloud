@@ -1,0 +1,122 @@
+/* Color, type and spacing tokens. Light is the default; dark applies via
+   prefers-color-scheme unless the user forced a theme with [data-theme]. */
+:root {
+  color-scheme: light;
+
+  /* paper + ink */
+  --paper: #f7f5ee;
+  --paper-grid: rgb(64 120 200 / 0.12);
+  --paper-grid-major: rgb(64 120 200 / 0.22);
+  --card: #fffef9;
+  --card-rule: rgb(80 140 220 / 0.35);
+  --card-margin: #e0525a;
+  --ink: #1d2433;
+  --ink-soft: #4b5568;
+  --ink-faint: #8a93a6;
+
+  /* accents */
+  --pencil: #2f63d6;
+  --pencil-soft: rgb(47 99 214 / 0.14);
+  --on-pencil: #ffffff;
+  --highlight: #ffe14d;
+  --highlight-soft: rgb(255 225 77 / 0.55);
+  --good: #1f9d63;
+  --good-soft: rgb(31 157 99 / 0.16);
+  --miss: #e8655a;
+  --miss-soft: rgb(232 101 90 / 0.16);
+
+  --surface: #ffffff;
+  --surface-2: #f0eee6;
+  --border: rgb(29 36 51 / 0.14);
+  --shadow-color: 220 30% 20%;
+  --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.12), 0 2px 6px hsl(var(--shadow-color) / 0.08);
+  --shadow-lg:
+    0 2px 4px hsl(var(--shadow-color) / 0.1), 0 12px 32px hsl(var(--shadow-color) / 0.16);
+
+  /* avatar palette */
+  --avatar-1: #2f63d6;
+  --avatar-2: #e8655a;
+  --avatar-3: #1f9d63;
+  --avatar-4: #9b5de5;
+  --avatar-5: #f2a516;
+  --avatar-6: #0fa3b1;
+
+  /* type */
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.5rem;
+  --text-hero: clamp(3.5rem, 16vw, 6.5rem);
+
+  /* space + shape */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --gutter: 16px;
+  --content-max: 720px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --paper: #151a24;
+    --paper-grid: rgb(120 160 230 / 0.08);
+    --paper-grid-major: rgb(120 160 230 / 0.15);
+    --card: #1f2633;
+    --card-rule: rgb(120 165 240 / 0.25);
+    --card-margin: #e8655a;
+    --ink: #eef1f7;
+    --ink-soft: #b5bdcc;
+    --ink-faint: #7c8598;
+    --pencil: #7da2ff;
+    --pencil-soft: rgb(125 162 255 / 0.18);
+    --on-pencil: #0d1426;
+    --highlight: #ffd84a;
+    --highlight-soft: rgb(255 216 74 / 0.3);
+    --good: #4cc98c;
+    --good-soft: rgb(76 201 140 / 0.18);
+    --miss: #ff8a7e;
+    --miss-soft: rgb(255 138 126 / 0.18);
+    --surface: #1c2230;
+    --surface-2: #232a39;
+    --border: rgb(238 241 247 / 0.14);
+    --shadow-color: 220 40% 2%;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #151a24;
+  --paper-grid: rgb(120 160 230 / 0.08);
+  --paper-grid-major: rgb(120 160 230 / 0.15);
+  --card: #1f2633;
+  --card-rule: rgb(120 165 240 / 0.25);
+  --card-margin: #e8655a;
+  --ink: #eef1f7;
+  --ink-soft: #b5bdcc;
+  --ink-faint: #7c8598;
+  --pencil: #7da2ff;
+  --pencil-soft: rgb(125 162 255 / 0.18);
+  --on-pencil: #0d1426;
+  --highlight: #ffd84a;
+  --highlight-soft: rgb(255 216 74 / 0.3);
+  --good: #4cc98c;
+  --good-soft: rgb(76 201 140 / 0.18);
+  --miss: #ff8a7e;
+  --miss-soft: rgb(255 138 126 / 0.18);
+  --surface: #1c2230;
+  --surface-2: #232a39;
+  --border: rgb(238 241 247 / 0.14);
+  --shadow-color: 220 40% 2%;
+}

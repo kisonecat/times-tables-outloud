@@ -1,0 +1,136 @@
+.card {
+  position: relative;
+  grid-area: 1 / 1;
+  width: min(100%, 420px);
+  /* Index card: a red margin line near the top, blue rules below it. */
+  padding: 52px var(--space-5) var(--space-5);
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  background-color: var(--card);
+  background-image: repeating-linear-gradient(transparent 0 31px, var(--card-rule) 31px 32px);
+  background-position: 0 36px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transform-origin: 50% 80%;
+  /* Deal-in: from the deck at the lower right, rotating -8° → 0° on a spring. */
+  animation: deal var(--dur-deal) var(--ease-spring) both;
+}
+
+/* A soft shadow that grows as the card lifts off the deck (opacity only, not box-shadow). */
+.lift {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--shadow-lg);
+  pointer-events: none;
+  animation: global(fade-in) var(--dur-deal) var(--ease-out) both;
+}
+
+.header {
+  position: absolute;
+  inset: 34px 0 auto;
+  height: 2px;
+  background: var(--card-margin);
+}
+
+.problem {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.25em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-hero);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The × spins in between the factors' digits. */
+.times {
+  display: inline-block;
+  color: var(--pencil);
+  font-size: 0.7em;
+  animation: spin-in var(--dur-base) var(--ease-spring) both;
+  animation-delay: calc(var(--i) * var(--stagger-digit));
+}
+
+.card[data-status='correct'],
+.card[data-status='miss'] {
+  cursor: pointer;
+}
+
+/* Miss: a small, gentle wobble. */
+.card[data-status='miss']:not([data-exit]) {
+  animation: wobble var(--dur-slow) var(--ease-wobble);
+}
+
+.card[data-exit] {
+  pointer-events: none;
+}
+
+.card[data-exit='flick'] {
+  animation: flick var(--dur-base) var(--ease-in) forwards;
+}
+
+.card[data-exit='tuck'] {
+  animation: tuck var(--dur-base) var(--ease-in) forwards;
+}
+
+.card[data-exit] .lift {
+  animation: global(fade-out) var(--dur-base) var(--ease-in) forwards;
+}
+
+@keyframes deal {
+  from {
+    opacity: 0.4;
+    transform: translate(45%, 60%) rotate(-8deg) scale(0.5);
+  }
+}
+
+@keyframes spin-in {
+  from {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+}
+
+@keyframes wobble {
+  to {
+    transform: rotate(6deg) translateX(14px);
+  }
+}
+
+/* Onto the done pile at the upper left. */
+@keyframes flick {
+  to {
+    opacity: 0;
+    transform: translate(-80%, -75%) rotate(-18deg) scale(0.4);
+  }
+}
+
+/* Back into the deck at the lower right: this one's coming back soon. */
+@keyframes tuck {
+  to {
+    opacity: 0;
+    transform: translate(45%, 60%) rotate(8deg) scale(0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .lift,
+  .times {
+    animation: global(fade-in) var(--dur-deal) linear both;
+  }
+
+  .card[data-status='miss']:not([data-exit]) {
+    animation: none;
+  }
+
+  .card[data-exit='flick'],
+  .card[data-exit='tuck'],
+  .card[data-exit] .lift {
+    animation: global(fade-out) var(--dur-base) linear forwards;
+  }
+}

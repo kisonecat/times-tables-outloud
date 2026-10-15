@@ -1,0 +1,176 @@
+.wrap {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+}
+
+.box {
+  position: relative;
+  display: grid;
+}
+
+.slot,
+.interim,
+.writeIn {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 12vw, 4rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.slot {
+  width: 4.2ch;
+  padding: var(--space-1) var(--space-2);
+  border: 3px dashed var(--ink-faint);
+  border-radius: var(--radius-md);
+  background-color: var(--surface);
+  /* The highlighter band, swiped in on a correct answer. */
+  background-image: linear-gradient(
+    transparent 52%,
+    var(--highlight) 52%,
+    var(--highlight) 86%,
+    transparent 86%
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  text-align: center;
+  line-height: 1.1;
+  caret-color: var(--pencil);
+}
+
+.slot::placeholder {
+  color: var(--ink-faint);
+  opacity: 0.5;
+}
+
+.slot:focus-visible {
+  outline: none;
+  border-style: solid;
+  border-color: var(--pencil);
+}
+
+/* Correct: the slot stamps down, then the highlighter swipes across. */
+.wrap[data-status='correct'] .slot {
+  border-style: solid;
+  border-color: var(--good);
+  background-size: 100% 100%;
+  animation:
+    stamp var(--dur-base) var(--ease-spring),
+    swipe var(--dur-base) var(--ease-out) calc(var(--dur-fast) * 0.5) backwards;
+}
+
+.wrap[data-status='miss'] .slot {
+  border-style: solid;
+  border-color: var(--miss);
+}
+
+/* Interim: heard-so-far digits type in out of a blur, so it's clear we're still listening. */
+.interim {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  color: var(--ink-soft);
+  animation: interim-in var(--dur-fast) var(--ease-out);
+}
+
+.writeIn {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.writeIn text {
+  fill: var(--ink);
+  fill-opacity: 0;
+  stroke: var(--ink);
+  stroke-width: 1.5px;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation:
+    write var(--dur-slow) var(--ease-out) var(--dur-fast) forwards,
+    ink var(--dur-base) var(--ease-out) calc(var(--dur-fast) + var(--dur-slow)) forwards;
+}
+
+.verdict {
+  margin: 0;
+  font-weight: 700;
+  font-size: var(--text-lg);
+  animation: global(rise-in) var(--dur-fast) var(--ease-out);
+}
+
+.wrap[data-status='correct'] .verdict {
+  color: var(--good);
+}
+
+.wrap[data-status='miss'] .verdict {
+  color: var(--miss);
+}
+
+.revision {
+  margin: 0;
+  color: var(--good);
+  font-weight: 700;
+  animation: global(rise-in) var(--dur-fast) var(--ease-out);
+}
+
+/* Snapshot on a leaving card: same look, nothing replays. */
+.wrap[data-snapshot] .slot {
+  animation: none;
+}
+
+.ringSpacer {
+  padding: 4px;
+}
+
+@keyframes stamp {
+  from {
+    transform: scale(1.35);
+  }
+}
+
+@keyframes swipe {
+  from {
+    background-size: 0% 100%;
+  }
+}
+
+@keyframes interim-in {
+  from {
+    opacity: 0.4;
+    filter: blur(4px);
+  }
+}
+
+@keyframes write {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ink {
+  to {
+    fill-opacity: 1;
+    stroke-opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap[data-status='correct'] .slot {
+    animation: none;
+  }
+
+  .interim {
+    animation: global(fade-in) var(--dur-fast) linear;
+  }
+
+  .writeIn text {
+    fill-opacity: 1;
+    stroke: none;
+    animation: global(fade-in) var(--dur-base) linear backwards;
+  }
+}

@@ -1,0 +1,38 @@
+.odometer {
+  display: inline-flex;
+}
+
+/* One digit's window: sized by an invisible copy of the digit, clipping the strip. */
+.window {
+  position: relative;
+  display: inline-block;
+  overflow: clip;
+}
+
+.ghost {
+  visibility: hidden;
+}
+
+.strip {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transform: translateY(calc(var(--to) * -5%));
+  animation: roll var(--dur-roll) var(--ease-out) both;
+  animation-delay: calc(var(--i) * var(--stagger-digit));
+}
+
+/* Each digit is 1/20 of the strip's height. */
+@keyframes roll {
+  from {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip {
+    animation: none;
+  }
+}

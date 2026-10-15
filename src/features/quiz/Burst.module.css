@@ -1,0 +1,47 @@
+.burst {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.burst span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: fly var(--dur-slow) var(--ease-out) forwards;
+}
+
+.burst span::before {
+  content: attr(data-g);
+  position: absolute;
+  translate: -50% -50%;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--pencil);
+}
+
+.burst span[data-hue='1']::before {
+  color: var(--good);
+}
+
+.burst span[data-hue='2']::before {
+  color: color-mix(in srgb, var(--highlight) 70%, var(--ink));
+}
+
+@keyframes fly {
+  from {
+    transform: rotate(var(--angle)) translateY(0) rotate(calc(-1 * var(--angle))) scale(0.6);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    transform: rotate(var(--angle)) translateY(calc(-1 * var(--dist)))
+      rotate(calc(-1 * var(--angle))) scale(1);
+    opacity: 0;
+  }
+}

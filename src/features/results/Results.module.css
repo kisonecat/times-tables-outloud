@@ -1,0 +1,161 @@
+.screen {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--gutter) var(--space-7);
+  display: grid;
+  gap: var(--space-5);
+  animation: global(rise-in) var(--dur-base) var(--ease-out);
+}
+
+.title {
+  font-size: var(--text-2xl);
+  text-align: center;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.stats > div {
+  padding: var(--space-3);
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.stats dt {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.stats dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-xl);
+  font-variant-numeric: tabular-nums;
+}
+
+.stats small {
+  font-size: 0.6em;
+  color: var(--ink-faint);
+}
+
+.panel {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.panel h2 {
+  font-size: var(--text-lg);
+}
+
+.factList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.factList li {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--miss-soft);
+  font-weight: 700;
+}
+
+.gridWrap {
+  overflow-x: auto;
+}
+
+.grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 2px;
+  table-layout: fixed;
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.grid th {
+  color: var(--ink-faint);
+  font-weight: 700;
+}
+
+.corner {
+  color: var(--pencil) !important;
+}
+
+.grid td {
+  aspect-ratio: 1;
+  /* Cells flip in along the diagonals. */
+  animation: flip var(--dur-base) var(--ease-out) backwards;
+  animation-delay: calc(var(--d) * var(--dur-fast) * 0.12);
+  border-radius: 3px;
+  background: var(--surface-2);
+  text-align: center;
+  font-weight: 700;
+}
+
+.grid td[data-result='good'] {
+  background: var(--good-soft);
+  color: var(--good);
+}
+
+.grid td[data-result='miss'] {
+  background: var(--miss-soft);
+  color: var(--miss);
+}
+
+.grid td[data-result='mixed'] {
+  background: var(--highlight-soft);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.countUp {
+  counter-reset: n var(--count);
+  animation: global(count-up) var(--dur-slow) var(--ease-out) var(--dur-fast) both;
+}
+
+.countUp::before {
+  content: counter(n);
+}
+
+@keyframes flip {
+  from {
+    opacity: 0;
+    transform: perspective(200px) rotateY(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid td {
+    animation: global(fade-in) var(--dur-base) linear backwards;
+  }
+}
+
+.factList.good li {
+  background: var(--good-soft);
+}
+
+.note {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+}

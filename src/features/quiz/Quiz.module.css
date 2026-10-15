@@ -1,0 +1,233 @@
+.screen {
+  position: relative;
+  max-width: 560px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: var(--space-3) var(--gutter) var(--space-6);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-3);
+  /* Cards fly toward the deck and pile; never let them cause horizontal scroll. */
+  overflow-x: clip;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+}
+
+.top > button {
+  grid-row: span 2;
+}
+
+.top > [role='alert'] {
+  grid-column: 1 / -1;
+}
+
+/* ---- progress strip ---- */
+
+.strip {
+  flex: 1;
+  display: flex;
+  gap: 3px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.strip li {
+  flex: 1;
+  max-width: 28px;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+.strip li[data-state='good'] {
+  background: var(--good);
+  border-color: var(--good);
+  animation: tick var(--dur-base) var(--ease-spring);
+}
+
+.strip li[data-state='miss'] {
+  background: var(--miss);
+  border-color: var(--miss);
+  animation: tick var(--dur-base) var(--ease-spring);
+}
+
+@keyframes tick {
+  from {
+    transform: scaleY(1.8);
+  }
+}
+
+.strip li[data-state='current'] {
+  background: var(--pencil);
+  border-color: var(--pencil);
+  animation: global(pulse) calc(var(--dur-slow) * 2) var(--ease-out) infinite;
+}
+
+/* ---- stage: deck, cards, burst ---- */
+
+.stage {
+  position: relative;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  padding: var(--space-6) 0;
+}
+
+/* Every card (the live one and any still leaving) shares one grid cell. The deck and
+   done pile hang off its corners. */
+.cards {
+  position: relative;
+  display: grid;
+  width: min(100%, 420px);
+  justify-items: center;
+}
+
+.heard {
+  margin: var(--space-3) 0 0;
+  color: var(--ink-faint);
+  font-style: italic;
+  text-align: center;
+  min-height: 1.5em;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.bottom {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: center;
+}
+
+.engineMessage {
+  margin: 0;
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--highlight-soft);
+  font-size: var(--text-sm);
+}
+
+/* ---- getting ready ---- */
+
+.prepCard {
+  width: min(100%, 420px);
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  border-top: 2px solid var(--card-margin);
+  box-shadow: var(--shadow-lg);
+  animation: global(fade-in) var(--dur-base) var(--ease-out);
+}
+
+/* ---- mic ---- */
+
+.mic {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 32px;
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.bars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 24px;
+}
+
+/* Heights follow --level (set every frame from the mic's RMS) through transform; the
+   idle "breathing" uses the separate scale property so the two compose. */
+.bars i {
+  display: block;
+  width: 5px;
+  height: 24px;
+  border-radius: 3px;
+  background: var(--pencil);
+  transform-origin: center;
+  transform: scaleY(0.25);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.mic[data-has-level] .bars i {
+  transform: scaleY(max(0.25, min(1, calc(var(--level, 0) * 2.5 * var(--w)))));
+}
+
+.mic:not([data-has-level])[data-state='hearing'] .bars i {
+  transform: scaleY(calc(0.7 * var(--w)));
+}
+
+.mic[data-state='listening'] .bars i,
+.mic[data-state='idle'] .bars i {
+  animation: breathe calc(var(--dur-slow) * 3) ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * var(--dur-fast) * -1);
+}
+
+.mic[data-state='paused'] .bars i,
+.mic[data-state='thinking'] .bars i {
+  background: var(--ink-faint);
+}
+
+@keyframes breathe {
+  to {
+    scale: 1 1.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bars i,
+  .mic[data-has-level] .bars i,
+  .mic:not([data-has-level])[data-state='hearing'] .bars i {
+    transform: scaleY(0.6);
+    transition: opacity var(--dur-fast) linear;
+    animation: none !important;
+  }
+
+  .mic[data-has-level] .bars i {
+    opacity: max(0.3, min(1, calc(var(--level, 0) * 3)));
+  }
+}
+
+.prepTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-xl);
+  text-align: center;
+}
+
+.prepNote {
+  margin: 0;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.prepBar {
+  width: 100%;
+  height: 12px;
+  accent-color: var(--pencil);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip li[data-state='good'],
+  .strip li[data-state='miss'] {
+    animation: none;
+  }
+}

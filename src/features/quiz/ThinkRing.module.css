@@ -1,0 +1,50 @@
+.ring {
+  position: relative;
+  display: grid;
+  border-radius: calc(var(--radius-md) + 4px);
+  padding: 4px;
+  --ring-color: var(--pencil);
+}
+
+.ring[data-enabled]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0turn,
+    var(--ring-color) calc(var(--elapsed) * 1turn),
+    color-mix(in srgb, var(--ink-faint) 25%, transparent) 0
+  );
+  opacity: 0.55;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.ring[data-enabled][data-running]::before {
+  animation:
+    ring-fill var(--target) linear forwards,
+    ring-done 1ms linear var(--target) forwards;
+}
+
+.ring[data-enabled]:not([data-running])::before {
+  opacity: 0;
+}
+
+.ring > * {
+  position: relative;
+}
+
+@keyframes ring-fill {
+  from {
+    --elapsed: 0;
+  }
+  to {
+    --elapsed: 1;
+  }
+}
+
+@keyframes ring-done {
+  to {
+    --ring-color: var(--highlight);
+  }
+}

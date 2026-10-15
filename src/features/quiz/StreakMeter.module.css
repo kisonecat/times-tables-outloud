@@ -1,0 +1,48 @@
+.meter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 24px;
+}
+
+.notches {
+  display: flex;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notches li {
+  width: 10px;
+  height: 16px;
+  border-radius: 3px;
+  border: 2px solid var(--border);
+  background-color: transparent;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.notches li[data-on] {
+  border-color: var(--highlight);
+  background-color: var(--highlight);
+  animation: notch var(--dur-base) var(--ease-spring);
+}
+
+.count {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes notch {
+  from {
+    transform: scaleY(0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notches li[data-on] {
+    animation: global(fade-in) var(--dur-fast) linear;
+  }
+}

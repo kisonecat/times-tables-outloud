@@ -1,0 +1,57 @@
+.model {
+  margin: var(--space-3) 0 0;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  animation: global(fade-in) var(--dur-base) var(--ease-out);
+  /* Dots shrink to fit 12 across a phone screen. */
+  --dot: min(14px, calc((min(100vw, 420px) - 64px) / var(--cols) - 4px));
+}
+
+.grid {
+  display: grid;
+  gap: 4px;
+}
+
+.row {
+  display: flex;
+  gap: 4px;
+  animation: row-in var(--dur-base) var(--ease-spring) backwards;
+  animation-delay: calc(var(--r) * var(--stagger-row));
+}
+
+.row i {
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: var(--pencil);
+}
+
+.caption {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Counts up from 0 to the product while the rows land (a registered integer + counter). */
+.count {
+  counter-reset: n var(--count);
+  animation: global(count-up) calc(var(--rows) * var(--stagger-row) + var(--dur-base)) linear both;
+}
+
+.count::after {
+  content: counter(n);
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.9);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row {
+    animation: global(fade-in) var(--dur-base) linear backwards;
+  }
+}

@@ -1,0 +1,48 @@
+.confetti {
+  position: fixed;
+  inset: 0;
+  overflow: clip;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.confetti i {
+  position: absolute;
+  top: -16px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--pencil);
+  animation: fall calc(var(--dur-slow) * 2.6) var(--ease-out) both;
+}
+
+.confetti i[data-wide] {
+  width: 12px;
+  height: 8px;
+}
+
+.confetti i[data-hue='1'] {
+  background: var(--highlight);
+}
+
+.confetti i[data-hue='2'] {
+  background: var(--good);
+}
+
+.confetti i[data-hue='3'] {
+  background: var(--miss);
+}
+
+@keyframes fall {
+  from {
+    transform: translate(0, 0) rotate(0);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(var(--drift), var(--fall)) rotate(var(--spin));
+    opacity: 0;
+  }
+}
