@@ -24,6 +24,25 @@ export async function startSpokenSession(page: Page, tables = '6–9') {
   await page.getByRole('button', { name: 'Start' }).click();
 }
 
+/**
+ * Wait until the quiz has counted `n` answers. Feedback ("Yes!") is on screen for only
+ * ~350 ms before the next card deals in, short enough for a busy CI machine to miss, so
+ * wait on the progress strip, which lasts.
+ */
+export async function waitForAnswered(page: Page, n: number, total = 20) {
+  const done =
+    n >= total
+      ? page.getByRole('heading', { name: /Nice work|Perfect round/ })
+      : page.getByRole('list', { name: new RegExp(` out of ${n} so far`) });
+  await expect(done).toBeVisible();
+}
+
+/** The next card is up and listening (the mic status only shows outside feedback). */
+export async function nextCard(page: Page): Promise<[number, number]> {
+  await expect(page.getByText('Listening…')).toBeVisible();
+  return currentProblem(page);
+}
+
 export async function currentProblem(page: Page): Promise<[number, number]> {
   const problem = page.getByLabel(/^\d+ times \d+$/);
   await expect(problem).toBeVisible();

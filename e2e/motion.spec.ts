@@ -1,5 +1,12 @@
 import { expect, test } from '@playwright/test';
-import { currentProblem, say, startSpokenSession, useFakeSpeech } from './helpers';
+import {
+  currentProblem,
+  nextCard,
+  say,
+  startSpokenSession,
+  useFakeSpeech,
+  waitForAnswered,
+} from './helpers';
 
 /** A right answer must turn around to a readable next card within this (PLAN §10, phase 3). */
 const BUDGET_MS = 750;
@@ -115,15 +122,14 @@ test.describe('reduced motion', () => {
     };
 
     for (let i = 0; i < 6; i++) {
-      const [a, b] = await currentProblem(page);
+      const [a, b] = await nextCard(page);
       await sample();
       await say(page, String(i % 3 === 2 ? a * b + 1 : a * b)); // include misses
       await page.waitForTimeout(30);
-      await sample();
-      await expect(page.getByRole('button', { name: 'Next →' })).toBeVisible();
-      await page.getByRole('button', { name: 'Next →' }).click();
+      await sample(); // feedback animations
+      await waitForAnswered(page, i + 1);
       await page.waitForTimeout(30);
-      await sample();
+      await sample(); // the next card dealing in
     }
     expect([...offenders]).toEqual([]);
   });
