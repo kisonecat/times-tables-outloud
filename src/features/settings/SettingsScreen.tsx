@@ -54,6 +54,16 @@ export function SettingsScreen() {
         </p>
         <p className={styles.note}>Nothing you practice ever leaves this device.</p>
       </div>
+
+      <div className={styles.panel}>
+        <h2>About</h2>
+        <p>
+          Times Tables Out Loud is free software under the{' '}
+          <a href="https://www.gnu.org/licenses/agpl-3.0.html">GNU Affero General Public License</a>
+          . You can read, change and share{' '}
+          <a href="https://github.com/kisonecat/times-tables-outloud">its source code</a>.
+        </p>
+      </div>
     </section>
   );
 }

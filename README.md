@@ -52,3 +52,15 @@ Chromium if needed.
 
 Every push to `main` runs the tests and deploys `dist/` to GitHub Pages
 (`.github/workflows/deploy.yml`).
+
+## License
+
+Copyright © 2026 Jim Fowler.
+
+Times Tables Out Loud is free software: you can redistribute it and/or modify it under the
+terms of the GNU Affero General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later version. See
+[LICENSE](LICENSE).
+
+Because it's the Affero GPL, if you run a modified version for others to use over a
+network, you must offer them its source code. The app links to its source in Settings.
