@@ -12,7 +12,7 @@
   --stagger-digit: calc(40ms * var(--motion-scale));
   --stagger-row: calc(60ms * var(--motion-scale));
   /* how long feedback stays up before the next card deals in */
-  --hold-correct: calc(400ms * var(--motion-scale));
+  --hold-correct: calc(350ms * var(--motion-scale));
   --hold-miss: calc(2500ms * var(--motion-scale));
 
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);

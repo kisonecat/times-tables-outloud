@@ -13,9 +13,9 @@ export { responseTimeMs } from '../../learning/grading';
  * How long feedback stays up before the next card deals in, unless the learner skips
  * ahead. The live values come from the --hold-* motion tokens; these are fallbacks.
  * With ≈200 ms of deal-in before the next card is legible, a right answer turns around
- * in about 650 ms (≤ 750 ms is the budget).
+ * in about 600 ms (≤ 750 ms is the budget).
  */
-export const FEEDBACK_MS = { correct: 400, miss: 2500 } as const;
+export const FEEDBACK_MS = { correct: 350, miss: 2500 } as const;
 
 /** A typed entry as a number, or null if it isn't one. */
 export function parseTyped(text: string): number | null {
